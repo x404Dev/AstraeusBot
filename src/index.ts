@@ -6,4 +6,4 @@ const client = new Client({
     intents: BotUtils.getGatewayIntents(BotConfig.discord.intents),
 });
 
-client.login("")
+client.login(BotConfig.discord.token);

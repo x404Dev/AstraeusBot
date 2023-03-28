@@ -1,4 +1,3 @@
-import { GatewayIntentBits } from "discord.js";
 import { BotConfig } from "./config/bot";
 import BotUtils from "./utils/BotUtils";
 import dotenv from "dotenv";
@@ -13,6 +12,13 @@ const client = new AstraeusClient({
 client.loadDefaultEvents();
 
 // Start plugins with the PluginManager
-client.pluginsManager.enableAllPlugins(client);
+client.pluginsManager.enableAllPlugins();
+
+// Load all commands
+
+client.commandsManager.registerCommands();
 
 client.login(process.env.DISCORD_TOKEN);
+
+export default client;
+

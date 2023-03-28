@@ -3,12 +3,12 @@ import fs from "fs";
 import AstraeusClient from "./AstraeusClient";
 
 export default class AstraeusPlugin {
-  public name: string;
-  public version: string;
-  public description: string;
-  public author: string;
-  public website: string;
-  public license: string;
+  public readonly name: string;
+  public readonly version: string;
+  public readonly description: string;
+  public readonly author: string;
+  public readonly website: string;
+  public readonly license: string;
   public active: boolean;
   public client?: AstraeusClient;
 

@@ -2,9 +2,11 @@ import { Client, ClientOptions } from "discord.js";
 import PluginManager from "../managers/PluginManager";
 import path from "path";
 import fs from "fs";
+import CommandsManager from "../managers/CommandsManager";
 
 export default class AstraeusClient extends Client {
-  public pluginsManager: PluginManager = new PluginManager(this);
+  public readonly pluginsManager: PluginManager = new PluginManager(this);
+  public readonly commandsManager: CommandsManager = new CommandsManager(this);
 
   constructor(options: ClientOptions) {
     super(options);
@@ -21,9 +23,9 @@ export default class AstraeusClient extends Client {
       const event = require(filePath).default;
 
       if (event.once) {
-        this.once(event.name, (...args: any[]) => event.execute(...args));
+        this.once(event.name, (...args: any[]) => event.execute(this, ...args));
       } else {
-        this.on(event.name, (...args: any[]) => event.execute(...args));
+        this.on(event.name, (...args: any[]) => event.execute(this, ...args));
       }
     }
   }

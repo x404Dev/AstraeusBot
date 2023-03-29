@@ -30,7 +30,10 @@ export default class AstraeusPlugin {
   }
 
   public setEnabled(enabled: boolean): void {
-    if(!this.client) throw new Error("Client is not defined! Be sure that the plugin is properly initiated before doing anything with it!");
+    if (!this.client)
+      throw new Error(
+        "Client is not defined! Be sure that the plugin is properly initiated before doing anything with it!"
+      );
     if (enabled === this.active) return;
     if (enabled) {
       this.onEnable();
@@ -45,7 +48,7 @@ export default class AstraeusPlugin {
   public init(client: AstraeusClient): void {
     this.client = client;
     this.setEnabled(true);
-  };
+  }
 
   /**
    * Called when the plugin is enabled.
@@ -57,7 +60,7 @@ export default class AstraeusPlugin {
    */
   onDisable(): void {}
 
-  registerEvents(client: AstraeusClient): void {
+  async registerEvents(client: AstraeusClient): Promise<void> {
     //get all events in ./events/ in plugin folder
     const eventsPath = path.join(__dirname, "../plugins", this.name, "events");
     const eventFiles = fs
@@ -66,10 +69,10 @@ export default class AstraeusPlugin {
 
     for (const file of eventFiles) {
       const filePath = path.join(eventsPath, file);
-      const event = require(filePath).default;
+      const event = (await import(filePath));
 
       if (event.once) {
-        console.log(`[${this.name}] Registering event ${event.name}...`)
+        console.log(`[${this.name}] Registering event ${event.name}...`);
         client.once(event.name, (...args: any[]) => event.execute(...args));
       } else {
         client.on(event.name, (...args: any[]) => event.execute(...args));
@@ -77,7 +80,7 @@ export default class AstraeusPlugin {
     }
   }
 
-  unregisterEvents(client: AstraeusClient): void {
+  async unregisterEvents(client: AstraeusClient): Promise<void> {
     //get all events in ./events/ in plugin folder
     const eventsPath = path.join(__dirname, "../events");
     const eventFiles = fs
@@ -86,7 +89,7 @@ export default class AstraeusPlugin {
 
     for (const file of eventFiles) {
       const filePath = path.join(eventsPath, file);
-      const event = require(filePath).default;
+      const event = (await import(filePath));
       client.off(event.name, (...args: any[]) => event.execute(...args));
     }
   }

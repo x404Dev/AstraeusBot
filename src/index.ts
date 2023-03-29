@@ -1,7 +1,7 @@
 import { BotConfig } from "./config/bot";
 import BotUtils from "./utils/BotUtils";
 import dotenv from "dotenv";
-import AstraeusClient from "./structure/AstraeusClient";
+import AstraeusClient from "./structures/AstraeusClient";
 dotenv.config();
 
 const client = new AstraeusClient({

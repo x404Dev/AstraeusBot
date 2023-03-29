@@ -1,9 +1,8 @@
+import AstraeusClient from "@structures/AstraeusClient";
+import AstraeusPlugin from "@structures/AstraeusPlugin";
 import fs from "fs";
 import path from "path";
-import AstraeusClient from "src/structure/AstraeusClient";
-import AstraeusPlugin from "src/structure/AstraeusPlugin";
-
-const { EnablePlugins } = require("../config/plugins");
+import EnablePlugins from "../config/plugins";
 
 export default class PluginManager {
 

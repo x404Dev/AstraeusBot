@@ -1,9 +1,9 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import AstraeusEmbed from "../structures/AstraeusEmbed";
-import AstraeusCommand from "../structures/AstraeusCommand";
-import client from "../index";
+import client from "../../.."
+import AstraeusCommand from "../../../structures/AstraeusCommand";
+import AstraeusEmbed from "../../../structures/AstraeusEmbed";
 
-export default class InfoCommand extends AstraeusCommand {
+export default class XPCommand extends AstraeusCommand {
   constructor() {
     super(
       new SlashCommandBuilder()

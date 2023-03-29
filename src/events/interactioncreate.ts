@@ -1,13 +1,12 @@
-import { BaseInteraction } from 'discord.js';
-import AstraeusClient from 'src/structure/AstraeusClient';
+import { BaseInteraction, CommandInteraction } from 'discord.js';
+import AstraeusClient from 'structures/AstraeusClient';
 
 export default {
   name: 'interactionCreate',
   once: false,
   execute(client: AstraeusClient, interaction: BaseInteraction) {
     if(interaction.isCommand()) {
-      console.log(interaction.commandName);
-      client.commandsManager.executeCommand(interaction);
+      client.commandsManager.executeCommand(interaction as CommandInteraction);
     }
   },
 };

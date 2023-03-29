@@ -1,7 +1,7 @@
 import fs from "fs";
 import { Collection, CommandInteraction, REST, Routes } from "discord.js";
-import AstraeusClient from "src/structure/AstraeusClient";
-import AstraeusCommand from "src/structure/AstraeusCommand";
+import AstraeusClient from "structures/AstraeusClient";
+import AstraeusCommand from "structures/AstraeusCommand";
 import path from "path";
 
 export default class CommandsManager {
@@ -13,7 +13,7 @@ export default class CommandsManager {
     this.commands = new Collection<string, AstraeusCommand>();
   }
 
-  public registerCommands(): void {
+  public async registerCommands(): Promise<void> {
     // Register pre-built commands
     const commandsPath = path.join(__dirname, "../commands");
     const commandFiles = fs
@@ -21,8 +21,8 @@ export default class CommandsManager {
       .filter((file) => file.endsWith(".js") || file.endsWith(".ts"));
     for (const file of commandFiles) {
       const cmdDir = path.join(commandsPath, file);
-      const command = require(cmdDir).default;
-      this.commands.set(new command().slashCommand.name, new command());
+      const command = new (require(cmdDir).default);
+      this.commands.set(command.slashCommand.name, command);
     }
 
     // Register plugin commands
@@ -42,9 +42,9 @@ export default class CommandsManager {
         .filter((file) => file.endsWith(".js") || file.endsWith(".ts"));
 
       for (const file of pluginCommandFiles) {
-        const command =
-          require(`../plugins/${pluginFolder}/commands/${file}`).default;
-        this.commands.set(new command().slashCommand.name, new command());
+        const command = new (require(`../plugins/${pluginFolder}/commands/${file}`).default);
+
+        this.commands.set(command.slashCommand.name, command);
       }
     }
 

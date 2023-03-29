@@ -18,11 +18,17 @@
             "node_modules/@types"
         ],
         "sourceMap": false,
-        "baseUrl": "./"
+        "baseUrl": "./src",
+        "paths": {
+            "@configuration/*": ["./config/*"],
+            "@structures/*": ["./structures/*"],
+            "@utils/*": ["./utils/*"],
+        }
     },
     "files": [
         "src/index.ts"
     ],
+    
     "include": [
         "./**/*.ts"
     ],

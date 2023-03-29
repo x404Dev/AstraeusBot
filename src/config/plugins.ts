@@ -1,3 +1,5 @@
-export const EnablePlugins: string[] = [
+const EnablePlugins: string[] = [
     "XP",
 ]
+
+export default EnablePlugins;

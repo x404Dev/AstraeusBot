@@ -1,6 +1,10 @@
 import AstraeusPlugin from "../../structures/AstraeusPlugin";
+import { DiscordRankup } from "discord-rankup";
+import client from "../../index";
 
 export default class XPPlugin extends AstraeusPlugin {
+
+
   constructor() {
     super(
       "XP",
@@ -9,6 +13,9 @@ export default class XPPlugin extends AstraeusPlugin {
       "Astraeus",
       "",
       "MIT"
+    );
+    DiscordRankup.init(process.env.MONGO_URL!, client).then(
+        () => console.log("[XP] Connected to MongoDB!")
     );
   }
 

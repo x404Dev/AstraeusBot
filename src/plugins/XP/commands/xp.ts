@@ -1,34 +1,29 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import client from "../../.."
+import { ChatInputCommandInteraction, PermissionsBitField, SlashCommandBuilder } from "discord.js";
 import AstraeusCommand from "../../../structures/AstraeusCommand";
-import AstraeusEmbed from "../../../structures/AstraeusEmbed";
+import { DiscordRankup } from "discord-rankup";
 
 export default class XPCommand extends AstraeusCommand {
   constructor() {
     super(
       new SlashCommandBuilder()
-        .setName("infos")
-        .setDescription("Get infos about the bot.")
+        .setName("xp")
+        .setDescription("Manage the XP system.")
+        .setDMPermission(false)
+        .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild)
     );
   }
 
   public async execute(interaction: ChatInputCommandInteraction) {
-    const infoEmbed = new AstraeusEmbed()
-      .setBrandedTitle("Infos")
-      .setDescription(
-        "AstreausBot is an Open Source bot made by [x404dev](https://github.com/x404Dev) made to be easy for " +
-          "everyone to use and modify. It is made with [discord.js](https://discord.js.org/#/) and [TypeScript](https://www.typescriptlang.org/)." +
-          " It also supports plugins, so you can add your own commands and events to the bot." +
-          " Here is a list of all the libraries used for this bot:"
-      )
-      .setFields(
-        client.packages.map((value, key) => ({
-          name: key,
-          value: value,
-          inline: true,
-        }))
-      );
+   
+    const xp = await DiscordRankup.fetch(interaction.user.id, interaction.guildId!)
 
-    await interaction.reply({ embeds: [infoEmbed] });
+    if(!xp) {
+      await DiscordRankup.createMember(interaction.user.id, interaction.guildId!)
+      await interaction.reply({ content: `You have 0 xp!` });
+      return;
+    }
+
+    await interaction.reply({ content: `You have ${xp.XP} xp!` });
+    return;
   }
 }

@@ -1,8 +1,9 @@
 import path from "path";
 import fs from "fs";
 import AstraeusClient from "./AstraeusClient";
+import Logger from "./Logger";
 
-export default class AstraeusPlugin {
+export default class AstraeusPlugin extends Logger {
   public readonly name: string;
   public readonly version: string;
   public readonly description: string;
@@ -20,6 +21,7 @@ export default class AstraeusPlugin {
     website: string,
     license: string
   ) {
+    super(name);
     this.name = name;
     this.version = version;
     this.description = description;
@@ -69,7 +71,7 @@ export default class AstraeusPlugin {
 
     for (const file of eventFiles) {
       const filePath = path.join(eventsPath, file);
-      const event = (await import(filePath));
+      const event = await import(filePath);
 
       if (event.once) {
         console.log(`[${this.name}] Registering event ${event.name}...`);
@@ -89,7 +91,7 @@ export default class AstraeusPlugin {
 
     for (const file of eventFiles) {
       const filePath = path.join(eventsPath, file);
-      const event = (await import(filePath));
+      const event = await import(filePath);
       client.off(event.name, (...args: any[]) => event.execute(...args));
     }
   }

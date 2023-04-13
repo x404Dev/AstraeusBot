@@ -9,7 +9,7 @@ export default class AstraeusCommand {
         this.slashCommand = command;
     }
 
-    public execute(interaction: ChatInputCommandInteraction): Promise<void> {
+    public execute(interaction: ChatInputCommandInteraction): Promise<unknown> {
         throw new Error("Method not implemented.");
     }
 

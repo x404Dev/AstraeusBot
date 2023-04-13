@@ -22,7 +22,7 @@
         "paths": {
             "@configuration/*": ["./config/*"],
             "@structures/*": ["./structures/*"],
-            "@utils/*": ["./utils/*"],
+            "@utils/*": ["../utils/*"],
         }
     },
     "files": [

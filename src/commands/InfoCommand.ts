@@ -8,7 +8,7 @@ export default class InfoCommand extends AstraeusCommand {
     super(
       new SlashCommandBuilder()
         .setName("infos")
-        .setDescription("Get infos about the bot.")
+        .setDescription("Get infos about the bot")
     );
   }
 

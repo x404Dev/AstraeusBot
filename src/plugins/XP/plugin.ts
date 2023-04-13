@@ -1,6 +1,7 @@
 import AstraeusPlugin from "../../structures/AstraeusPlugin";
 import { DiscordRankup } from "discord-rankup";
 import client from "../../index";
+import Logger from "@structures/Logger";
 
 export default class XPPlugin extends AstraeusPlugin {
 
@@ -15,16 +16,17 @@ export default class XPPlugin extends AstraeusPlugin {
       "MIT"
     );
     DiscordRankup.init(process.env.MONGO_URL!, client).then(
-        () => console.log("[XP] Connected to MongoDB!")
+        () => this.log("Connected to MongoDB!")
     );
   }
 
   onEnable(): void {
-    console.log("[XP] Thanks for using XPPlugin for AstraeusBot!");
+    this.log("Thanks for using XPPlugin for AstraeusBot!");
     this.client?.packages.set(
       "[XP] discord-rankup",
       "https://www.npmjs.com/package/discord-rankup"
     );
+    this.client?.packages.set("[XP] canvacord", "https://canvacord.js.org/");
   }
 
   onDisable(): void {
